@@ -33,7 +33,6 @@ class Solution:
         tmp_head = m_node.next
         rear = m_node
         rear.next = n_node.next
-        last_rear = m_node
 
         i = m
         while i < n:
@@ -41,8 +40,6 @@ class Solution:
             new_head.next = rear
             rear = new_head
             i += 1
-        
-        # m_node.next = n_node.next
 
         if m == 1:
             return new_head
