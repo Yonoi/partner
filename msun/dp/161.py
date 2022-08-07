@@ -3,19 +3,29 @@ class Solution:
     def isOneEditDistance(self, s: str, t: str) -> bool:
         m, n = len(s), len(t)
 
-        dp = [[0] * (n + 1) for _ in range(m + 1)]
-
-        for i in range(1, m + 1):
-            dp[i][0] = i
-        
-        for j in range(1, n + 1):
-            dp[0][j] = j
-
-        for i in range(1, m + 1):
-            for j in range(1, n + 1):
-                if s[i - 1] == t[j - 1]:
-                    dp[i][j] = dp[i - 1][j - 1]
+        if abs(m - n) > 1: 
+            return False
+        elif abs(m - n) == 1:
+            if m < n:
+                m, n = n, m
+                s, t = t, s
+            pm, pn = 0, 0
+            while pm < m and pn < n:
+                if s[pm] == t[pn]:
+                    pm += 1
+                    pn += 1
                 else:
-                    dp[i][j] = min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]) + 1
-        
-        return dp[-1][-1] == 1
+                    pm += 1
+                
+                if pm - pn > 1:
+                    return False
+            return True
+        else:
+            diff = 0
+            pm, pn = 0, 0
+            while pm < m and pn < n:
+                if s[pm] != t[pn]:
+                    diff += 1
+                pm += 1
+                pn += 1
+            return True if diff == 1 else False
